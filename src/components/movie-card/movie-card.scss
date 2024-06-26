@@ -1,0 +1,60 @@
+/* Base styles for the movie card */
+
+.movie-card {
+    background-color: #250634;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    height: 100%;
+  }
+  
+  .movie-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .movie-card .card-img-top {
+    max-height: 300px; /* Definindo altura máxima para as imagens */
+    object-fit: cover; /* Garante que a imagem cubra todo o espaço sem distorção */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  .movie-card .card-body {
+    padding: 1rem;
+    height: 100%;
+  }
+  
+  .movie-card .card-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .movie-card .card-text {
+    color: #ffffff;
+    font-size: 0.9rem;
+  }
+  
+  .movie-card button {
+    background-color: rgb(181, 180, 182);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .movie-card button:hover {
+    background-color: #007bff;
+  }
+  
+  .movie-card .card-footer {
+    background-color: #f8f9fa;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #666;
+  }
