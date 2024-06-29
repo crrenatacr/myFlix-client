@@ -16,7 +16,6 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null); // Initialize user state with stored value or null
   const [token, setToken] = useState(storedToken ? storedToken : null); // Initialize token state with stored value or null
   const [movies, setMovies] = useState([]); // State to store movies fetched from API
-  const [selectedMovie, setSelectedMovie] = useState(null); // State to manage the selected movie for detailed view
   const [loading, setLoading] = useState(true); // State to manage loading status
 
   // Fetch movies when the user logs in and the token is available
@@ -58,63 +57,86 @@ export const MainView = () => {
     return <div>Loading...</div>;
   }
 
-  // If user is not logged in, show login and signup forms
-  if (!user) {
-    return (
-      <Row>
-        <Col className="text-center mb-3">
-          <h2>Welcome</h2>
-          <p>Please log in or sign up to continue.</p>
-        </Col>
-        <Col className="text-center mb-3">
-          <LoginView
-            onLoggedIn={(user, token) => {
-              setUser(user); // Set the user state
-              setToken(token); // Set the token state
-            }}
-          />
-        </Col>
-        <Col className="text-center mb-3">
-          <span>or</span>
-          <SignupView />
-        </Col>
-      </Row>
-    );
-  }
-
-  // Render MovieView for detailed movie display if selectedMovie is not null
-  if (selectedMovie) {
-    return (
-      <MovieView
-        movie={selectedMovie}
-        onBackClick={() => setSelectedMovie(null)} // Handle back button click to unset selectedMovie
-        similarMovies={movies.filter((m) => m.id !== selectedMovie.id)} // Filter movies to exclude selectedMovie as similar
-      />
-    );
-  }
-
-  // If there are no movies fetched, display a message
-  if (movies.length === 0) {
-    return <div className="text-center">The list is empty!</div>;
-  }
-
-  // Default case: render movie cards for each movie in the movies array
   return (
-    <div className="movie-cards">
-      <Row xs={1} md={2} lg={4} className="g-4">
-        {movies.map((movie) => (
-          <Col className="mb-5" key={movie.id} md={3}>
-            <MovieCard
-              movie={movie}
-              onMovieClick={(newSelectedMovie) => setSelectedMovie(newSelectedMovie)} // Set selectedMovie state on movie card click
-            />
-          </Col>
-        ))}
+    <BrowserRouter>
+      <Row className="justify-content-md-center">
+        <Routes>
+          <Route
+            path="/register"
+            element={
+              <>
+                {user ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Col md={5}>
+                    <SignupView />
+                  </Col>
+                )}
+              </>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <>
+                {user ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Col md={5}>
+                    <LoginView
+                      onLoggedIn={(user, token) => {
+                        setUser(user); // Set the user state
+                        setToken(token); // Set the token state
+                      }}
+                    />
+                  </Col>
+                )}
+              </>
+            }
+          />
+          <Route
+            path="/movies/:movieId"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : movies.length === 0 ? (
+                  <Col>The list is empty!</Col>
+                ) : (
+                  <Col md={8}>
+                    <MovieView movies={movies} />
+                  </Col>
+                )}
+              </>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : movies.length === 0 ? (
+                  <Col>The list is empty!</Col>
+                ) : (
+                  <>
+                    <Row xs={1} md={2} lg={4} className="g-4">
+                      {movies.map((movie) => (
+                        <Col className="mb-5" key={movie.id} md={3}>
+                          <MovieCard movie={movie} />
+                        </Col>
+                      ))}
+                    </Row>
+                    <Button variant="secondary" onClick={handleLogout} className="logout-button">
+                      Logout
+                    </Button>
+                  </>
+                )}
+              </>
+            }
+          />
+        </Routes>
       </Row>
-      {/* Logout button */}
-      <Button variant="secondary" onClick={handleLogout} className="logout-button">
-        Logout
-      </Button>
-    </div>
+    </BrowserRouter>
   );
 };

@@ -1,8 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { MainView } from './components/main-view/main-view';
 import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
+import { NavigationBar } from './components/navigation-bar/navigation-bar'; // Importa o novo componente NavigationBar
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss'; // Imports custom stylesheet
@@ -10,14 +9,8 @@ import './index.scss'; // Imports custom stylesheet
 const App = () => {
   return (
     <div>
-      {/* Navbar for navigation */}
-      <Navbar bg="dark" variant="dark" expand="lg">
-        <Container>
-          <Navbar.Brand href="#">MovieVerse</Navbar.Brand> {/* Branding link */}
-          <Navbar.Toggle aria-controls="basic-navbar-nav" /> {/* Toggle button for mobile view */}
-          
-        </Container>
-      </Navbar>
+      {/* NavigationBar component for navigation */}
+      <NavigationBar />
 
       {/* Main content area wrapped in Container with purple border */}
       <Container className="main-container">

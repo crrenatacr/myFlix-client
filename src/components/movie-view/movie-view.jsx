@@ -1,10 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useParams, Link } from 'react-router-dom';
 import { MovieCard } from '../movie-card/movie-card';
-import './movie-view.scss'; // Importing SCSS file if needed
+import './movie-view.scss';
 
 // MovieView functional component
-const MovieView = ({ movie, onBackClick, similarMovies }) => {
+export const MovieView = ({ movies }) => {
+const MovieView = ({ movies }) => {
+  // Accessing the movieId from URL parameters
+  const { movieId } = useParams();
+
+  // Finding the movie with the matching ID
+  const movie = movies.find((m) => m.id === movieId);
+
   return (
     <div className="movie-view">
       {/* Displaying the movie image */}
@@ -31,43 +39,43 @@ const MovieView = ({ movie, onBackClick, similarMovies }) => {
         <span>Description: </span>
         <span>{movie.description}</span>
       </div>
-      {/* Button to go back to the movie list */}
-      <button
-        onClick={onBackClick}
-        className="back-button"
-        style={{ cursor: "pointer" }}
-      >
-        Back
-      </button>
+      {/* Link to go back to the movie list */}
+      <Link to="/">
+        <button className="back-button" style={{ cursor: "pointer" }}>
+          Back
+        </button>
+      </Link>
 
       {/* Section for similar movies */}
       <hr />
       <h2>Similar Movies</h2>
       {/* Mapping through similarMovies array to display MovieCard for each */}
-      {similarMovies.map((similarMovie) => (
+      {movie.similarMovies.map((similarMovie) => (
         <MovieCard key={similarMovie.id} movie={similarMovie} onMovieClick={() => {}} />
       ))}
     </div>
   );
 };
+};
 
 // PropTypes for MovieView component to validate props
 MovieView.propTypes = {
-  movie: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  }).isRequired,
-  onBackClick: PropTypes.func.isRequired,
-  similarMovies: PropTypes.arrayOf(
+  movies: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       image: PropTypes.string.isRequired,
       director: PropTypes.string.isRequired,
+      genre: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      similarMovies: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          title: PropTypes.string.isRequired,
+          image: PropTypes.string.isRequired,
+          director: PropTypes.string.isRequired,
+        })
+      ).isRequired,
     })
   ).isRequired,
 };
