@@ -14,45 +14,6 @@
   box-shadow: 0 0 20px #0000001a;
 }
 
-.form-wrapper {
-  background-color: #f8f9fa;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 0 20px #0000001a;
-}
-
-.form-wrapper label {
-  color: #6c757d;
-}
-
-.form-wrapper input[type="text"], .form-wrapper input[type="password"] {
-  background-color: #f8f9fa;
-  border: 1px solid #6c757d;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  padding: 8px;
-  transition: border-color .3s;
-}
-
-.form-wrapper input[type="text"]:focus, .form-wrapper input[type="password"]:focus {
-  border-color: #6c757d;
-  outline: none;
-}
-
-.form-wrapper button[type="submit"] {
-  color: #fff;
-  cursor: pointer;
-  background-color: #6c757d;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 16px;
-  transition: background-color .3s;
-}
-
-.form-wrapper button[type="submit"]:hover {
-  background-color: #495057;
-}
-
 .main-view {
   background-color: #7d7d7e;
   padding: 20px;
@@ -135,6 +96,45 @@
   border-bottom-left-radius: 10px;
   padding: .5rem;
   font-size: .8rem;
+}
+
+.form-wrapper {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 20px #0000001a;
+}
+
+.form-wrapper label {
+  color: #6c757d;
+}
+
+.form-wrapper input[type="text"], .form-wrapper input[type="password"] {
+  background-color: #f8f9fa;
+  border: 1px solid #6c757d;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 8px;
+  transition: border-color .3s;
+}
+
+.form-wrapper input[type="text"]:focus, .form-wrapper input[type="password"]:focus {
+  border-color: #6c757d;
+  outline: none;
+}
+
+.form-wrapper button[type="submit"] {
+  color: #fff;
+  cursor: pointer;
+  background-color: #6c757d;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  transition: background-color .3s;
+}
+
+.form-wrapper button[type="submit"]:hover {
+  background-color: #495057;
 }
 
 .my-flix {

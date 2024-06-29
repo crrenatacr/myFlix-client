@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { MovieCard } from '../movie-card/movie-card';
-import { MovieView } from '../movie-view/movie-view';
-import { LoginView } from '../login-view/login-view';
-import { SignupView } from '../signup-view/signup-view';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import React, { useState, useEffect } from "react";
+import { MovieCard } from "../movie-card/movie-card";
+import { MovieView } from "../movie-view/movie-view";
+import { LoginView } from "../login-view/login-view";
+import { SignupView } from "../signup-view/signup-view";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import './main-view.scss';
+import { NavigationBar } from "../navigation-bar/navigation-bar"; 
+import ProfileView from "../profile-view/profile-view"; 
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import "./main-view.scss";
 
 // Functional component MainView
 export const MainView = () => {
-  const storedUser = JSON.parse(localStorage.getItem('user')); // Retrieve user from localStorage
-  const storedToken = localStorage.getItem('token'); // Retrieve token from localStorage
+  const storedUser = JSON.parse(localStorage.getItem("user")); // Retrieve user from localStorage
+  const storedToken = localStorage.getItem("token"); // Retrieve token from localStorage
   const [user, setUser] = useState(storedUser ? storedUser : null); // Initialize user state with stored value or null
   const [token, setToken] = useState(storedToken ? storedToken : null); // Initialize token state with stored value or null
   const [movies, setMovies] = useState([]); // State to store movies fetched from API
@@ -25,7 +27,7 @@ export const MainView = () => {
       return; // Exit if there is no token
     }
 
-    fetch('https://movieverse-902fc605dee3.herokuapp.com/movies', {
+    fetch("https://movieverse-902fc605dee3.herokuapp.com/movies", {
       headers: { Authorization: `Bearer ${token}` }, // Use the token for authorization
     })
       .then((response) => response.json())
@@ -59,6 +61,9 @@ export const MainView = () => {
 
   return (
     <BrowserRouter>
+      {/* NavigationBar component for navigation */}
+      <NavigationBar user={user} onLoggedOut={handleLogout} />
+
       <Row className="justify-content-md-center">
         <Routes>
           <Route
@@ -111,6 +116,20 @@ export const MainView = () => {
             }
           />
           <Route
+            path="/profile"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : (
+                  <Col md={8}>
+                    <ProfileView user={user} token={token} setUser={setUser} />
+                  </Col>
+                )}
+              </>
+            }
+          />
+          <Route
             path="/"
             element={
               <>
@@ -127,7 +146,11 @@ export const MainView = () => {
                         </Col>
                       ))}
                     </Row>
-                    <Button variant="secondary" onClick={handleLogout} className="logout-button">
+                    <Button
+                      variant="secondary"
+                      onClick={handleLogout}
+                      className="logout-button"
+                    >
                       Logout
                     </Button>
                   </>

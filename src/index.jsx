@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { MainView } from './components/main-view/main-view';
 import Container from 'react-bootstrap/Container';
-import { NavigationBar } from './components/navigation-bar/navigation-bar'; // Importa o novo componente NavigationBar
+import { NavigationBar } from './components/navigation-bar/navigation-bar'; // Imports the new component NavigationBar
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.scss'; // Imports custom stylesheet
