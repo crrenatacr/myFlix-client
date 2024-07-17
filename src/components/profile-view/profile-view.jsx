@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import './profile-view.scss'; // Import custom styles
 
 const ProfileView = ({ user, token, setUser }) => {
+  // State variables for user information and favorite movies
   const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(user.Email);
@@ -12,12 +13,14 @@ const ProfileView = ({ user, token, setUser }) => {
   const [favoriteMovies, setFavoriteMovies] = useState([]);
   const [movies, setMovies] = useState([]);
 
+  // Effect to fetch movies from API and update favorite movies based on user data
   useEffect(() => {
     fetch("https://movieverse-902fc605dee3.herokuapp.com/movies", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())
       .then((data) => {
+        // Map fetched data to extract relevant movie information
         const moviesFromApi = data.map((doc) => ({
           id: doc._id,
           title: doc.Title,
@@ -27,13 +30,17 @@ const ProfileView = ({ user, token, setUser }) => {
           description: doc.Description,
         }));
         setMovies(moviesFromApi);
+
+        // Filter favorite movies based on user's favorite list
         const userFavoriteMovies = moviesFromApi.filter((m) =>
           user.FavoriteMovies.includes(m.id)
         );
         setFavoriteMovies(userFavoriteMovies);
-      });
+      })
+      .catch((error) => console.error('Error fetching movies:', error));
   }, [token, user.FavoriteMovies]);
 
+  // Handler for updating user profile information
   const handleUpdate = (e) => {
     e.preventDefault();
     fetch(`https://movieverse-902fc605dee3.herokuapp.com/users/${user.Username}`, {
@@ -51,6 +58,7 @@ const ProfileView = ({ user, token, setUser }) => {
     })
       .then(response => response.json())
       .then(data => {
+        // Update user data in state and local storage
         setUser(data);
         localStorage.setItem("user", JSON.stringify(data));
         alert("Profile updated successfully");
@@ -60,12 +68,14 @@ const ProfileView = ({ user, token, setUser }) => {
       });
   };
 
+  // Handler for deregistering (deleting) user account
   const handleDeregister = () => {
     fetch(`https://movieverse-902fc605dee3.herokuapp.com/users/${user.Username}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(() => {
+        // Clear user data from local storage and reset state
         alert("User deregistered");
         setUser(null);
         localStorage.clear();
@@ -75,12 +85,14 @@ const ProfileView = ({ user, token, setUser }) => {
       });
   };
 
+  // Handler for removing a favorite movie from user's favorites
   const handleRemoveFavorite = (movieId) => {
     fetch(`https://movieverse-902fc605dee3.herokuapp.com/users/${user._id}/favorites/${movieId}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(() => {
+        // Update user data and favorite movies list after removal
         const updatedUser = {
           ...user,
           FavoriteMovies: user.FavoriteMovies.filter(id => id !== movieId),
@@ -94,6 +106,7 @@ const ProfileView = ({ user, token, setUser }) => {
       });
   };
 
+  // Render user profile view with form for updating information and list of favorite movies
   return (
     <Row>
       <Col md={6}>
@@ -174,6 +187,7 @@ const ProfileView = ({ user, token, setUser }) => {
   );
 };
 
+// Define prop types for ProfileView component
 ProfileView.propTypes = {
   user: PropTypes.shape({
     Username: PropTypes.string.isRequired,

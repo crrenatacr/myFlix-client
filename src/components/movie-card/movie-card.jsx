@@ -1,86 +1,101 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { BsHeart, BsHeartFill } from 'react-icons/bs'; // Importing empty and filled heart icons
+import { Card, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { BsHeart, BsHeartFill } from 'react-icons/bs';
+import './movie-card.scss';
 
-import "./movie-card.scss";
-
-// Functional component MovieCard
 export const MovieCard = ({ movie }) => {
-  // Retrieve user and token from localStorage
-  const storedUser = JSON.parse(localStorage.getItem("user")); // Retrieve user from localStorage
-  const storedToken = localStorage.getItem("token"); // Retrieve token from localStorage
+  // Load user data from localStorage
+  const storedUser = JSON.parse(localStorage.getItem('user'));
+  const storedToken = localStorage.getItem('token');
 
-  // State to control movie favorite status
+  // Initialize state for whether movie is favorited
   const [favorited, setFavorited] = useState(
-    storedUser.FavoriteMovies.includes(movie.id)
-  ); // State to control movie favorite status
+    storedUser && storedUser.FavoriteMovies.includes(movie.id)
+  );
 
   // Function to toggle movie favorite status
   const toggleFavorite = () => {
-    if (!favorited) {
-      // If movie is not a favorite, add it to the user's favorites
-      fetch(`https://movieverse-902fc605dee3.herokuapp.com/users/${storedUser._id}/favorites`, {
-        headers: { Authorization: `Bearer ${storedToken}` },
-        body: JSON.stringify({ movieId: movie.id }),
-        method: "POST",
-      }).then(() => {
-        // Update local storage and state after successful addition
-        storedUser.FavoriteMovies.push(movie.id);
-        localStorage.setItem("user", JSON.stringify(storedUser));
-        setFavorited(true);
-      });
-    } else {
-      // If movie is already a favorite, remove it from the user's favorites
-      fetch(`https://movieverse-902fc605dee3.herokuapp.com/users/${storedUser._id}/favorites/${movie.id}`, {
-        headers: { Authorization: `Bearer ${storedToken}` },
-        method: "DELETE",
-      }).then(() => {
-        // Update local storage and state after successful removal
-        storedUser.FavoriteMovies = storedUser.FavoriteMovies.filter(
-          (id) => id !== movie.id
-        );
-        localStorage.setItem("user", JSON.stringify(storedUser));
-        setFavorited(false);
-      });
-    }
+    const userId = storedUser._id;
+    const endpoint = `https://movieverse-902fc605dee3.herokuapp.com/users/${userId}/favorites/${movie.id}`;
+
+    // Define request options based on current favorite status
+    const requestOptions = {
+      method: favorited ? 'DELETE' : 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${storedToken}`
+      }
+    };
+
+    // Send request to server to add or remove favorite
+    fetch(endpoint, requestOptions)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Failed to toggle favorite.');
+      })
+      .then(() => {
+        // Update local storage and state with updated user data
+        const updatedUser = {
+          ...storedUser,
+          FavoriteMovies: favorited
+            ? storedUser.FavoriteMovies.filter((id) => id !== movie.id)
+            : [...storedUser.FavoriteMovies, movie.id]
+        };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        setFavorited(!favorited); // Toggle the favorited state
+      })
+      .catch((error) => console.error('Error toggling favorite:', error));
   };
+
+  // Effect to update favorited state based on changes in localStorage
+  useEffect(() => {
+    setFavorited(
+      storedUser && storedUser.FavoriteMovies.includes(movie.id)
+    );
+  }, [storedUser, movie.id]);
 
   return (
     <Card className="h-100 movie-card">
-      {/* Movie image */}
       <Card.Img variant="top" src={movie.image} className="card-img-top" />
 
       <Card.Body>
-        {/* Movie title */}
         <Card.Title>{movie.title}</Card.Title>
-
-        {/* Movie description */}
         <Card.Text>{movie.description}</Card.Text>
-
-        {/* Button to open movie view */}
         <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
-          <Button variant="purple" className="open-button">Open</Button>
+          <Button variant="purple" className="open-button">
+            Open
+          </Button>
         </Link>
       </Card.Body>
 
-      {/* Favorite button */}
-      <Button variant="link" className="favorite-button" onClick={toggleFavorite}>
-        {favorited ? <BsHeartFill className="heart-icon filled" /> : <BsHeart className="heart-icon outline" />}
+      {/* Favorite button with conditional icon based on favorited state */}
+      <Button
+        variant="link"
+        className="favorite-button"
+        onClick={toggleFavorite}
+      >
+        {favorited ? (
+          <BsHeartFill className="heart-icon filled" />
+        ) : (
+          <BsHeart className="heart-icon outline" />
+        )}
       </Button>
     </Card>
   );
 };
 
-// PropTypes to validate MovieCard props
+// Prop types for MovieCard component
 MovieCard.propTypes = {
   movie: PropTypes.shape({
-    id: PropTypes.string.isRequired, // Added id prop type
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  }).isRequired,
+    description: PropTypes.string.isRequired
+  }).isRequired
 };
 
-export default MovieCard; // Exporting MovieCard component as default
+export default MovieCard;
