@@ -1,0 +1,37 @@
+.favorite-movies-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .favorite-movie-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .favorite-movie-link {
+    color: #6f42c1;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  
+  .favorite-movie-link:hover {
+    color: #5a34a1;
+  }
+  
+  .remove-button {
+    color: #6f42c1;
+    font-size: 1.2em;
+    transition: color 0.3s;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .remove-button:hover {
+    color: #5a34a1;
+  }
+  

@@ -1,0 +1,42 @@
+/* SignupView component styles */
+
+.form-wrapper {
+  padding: 20px;
+  background-color: #f8f9fa; /* Light gray background */
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-wrapper label {
+  color: #6c757d; /* Light purple label color */
+}
+
+.form-wrapper input[type="text"],
+.form-wrapper input[type="password"] {
+  background-color: #f8f9fa; /* Light gray input background */
+  border: 1px solid #6c757d; /* Light purple border */
+  border-radius: 5px;
+  padding: 8px;
+  margin-bottom: 10px;
+  transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+.form-wrapper input[type="text"]:focus,
+.form-wrapper input[type="password"]:focus {
+  outline: none;
+  border-color: #6c757d; /* Light purple border on focus */
+}
+
+.form-wrapper button[type="submit"] {
+  background-color: #6c757d; /* Light purple background */
+  color: #fff; /* White text color */
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.form-wrapper button[type="submit"]:hover {
+  background-color: #495057; /* Darker purple on hover */
+}

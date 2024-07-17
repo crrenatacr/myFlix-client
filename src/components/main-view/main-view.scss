@@ -1,0 +1,90 @@
+/* MainView component styles */
+
+.main-view {
+  padding: 20px;
+  background-color: #7d7d7e; /* Light gray background */
+}
+
+/* Logout button styling */
+.logout-button {
+  position: left;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000; /* Ensures button is above other elements */
+  background-color: #77528e; /* Light purple background */
+  color: #fff; /* White text color */
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+/* Grid layout for movie cards */
+.movie-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* Styling for movie cards */
+.movie-card {
+  background-color: #ffffff; /* White background */
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  height: 100%;
+  overflow: hidden;
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+}
+
+.movie-card .card-img-top {
+  max-height: 300px; /* Maximum height for images */
+  object-fit: cover; /* Ensure image covers entire space without distortion */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.movie-card .card-body {
+  padding: 1rem;
+  height: 100%;
+}
+
+.movie-card .card-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.movie-card .card-text {
+  color: #00000074; /* Grayish text color */
+  font-size: 0.9rem;
+}
+
+.movie-card button {
+  background-color: #6c757d; /* Light purple background */
+  color: #fff; /* White text color */
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.movie-card button:hover {
+  background-color: #495057; /* Darker purple on hover */
+}
+
+.movie-card .card-footer {
+  background-color: #f8f9fa; /* Light gray footer background */
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #666; /* Grayish text color */
+}
+
+

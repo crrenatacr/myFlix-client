@@ -1,0 +1,90 @@
+/* Base styles for the movie card */
+
+.movie-card {
+  background-color: #250634; /* Background color */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: transform 0.3s ease-in-out; /* Smooth transition */
+  height: 100%; /* Full height card */
+  position: relative; /* Relative positioning for favorite button */
+  overflow: hidden; /* Hide overflow to contain absolutely positioned elements */
+}
+
+.movie-card:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+}
+
+.movie-card .card-img-top {
+  max-height: 300px; /* Maximum height for images */
+  object-fit: cover; /* Ensures the image covers the entire space without distortion */
+  border-top-left-radius: 10px; /* Rounded corners for top left */
+  border-top-right-radius: 10px; /* Rounded corners for top right */
+}
+
+.movie-card .card-body {
+  padding: 1rem; /* Internal padding */
+  height: calc(100% - 46px); /* Full height minus space for favorite button */
+  display: flex; /* Flex layout for aligning items */
+  flex-direction: column; /* Column direction */
+  justify-content: space-between; /* Space between title/description and buttons */
+}
+
+.movie-card .card-title {
+  font-weight: bold; /* Bold text for title */
+  font-size: 1.2rem; /* Title font size */
+  margin-bottom: 0.5rem; /* Bottom margin */
+}
+
+.movie-card .card-text {
+  color: #ffffff; /* Text color */
+  font-size: 0.9rem; /* Text font size */
+}
+
+/* Open button */
+.movie-card .open-button {
+  background-color: #6f42c1; /* Purple background color */
+  color: #fff; /* White text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 0.5rem 1rem; /* Internal padding */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  margin-bottom: 0.5rem; /* Bottom margin */
+}
+
+.movie-card .open-button:hover {
+  background-color: #5a3bcf; /* Darker purple background color on hover */
+}
+
+/* Favorite button */
+.movie-card .favorite-button {
+  position: absolute; /* Absolute position */
+  bottom: 10px; /* Bottom distance */
+  right: 10px; /* Right distance */
+  background-color: #fff; /* White background color */
+  border: none; /* No border */
+  border-radius: 50%; /* Rounded shape */
+  padding: 8px; /* Padding */
+  cursor: pointer; /* Pointer cursor */
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+}
+
+.movie-card .favorite-button:hover {
+  background-color: #f8f9fa; /* Lighter background color on hover */
+}
+
+/* Heart icon */
+.movie-card .heart-icon {
+  color: #6f42c1; /* Heart icon color */
+  transition: color 0.3s ease; /* Smooth transition */
+}
+
+/* Style for filled heart icon */
+.movie-card .heart-icon.filled {
+  color: #dc3545; /* Filled heart icon color */
+}
+
+/* Style for outline heart icon */
+.movie-card .heart-icon.outline {
+  color: #6f42c1; /* Outline heart icon color */
+}
