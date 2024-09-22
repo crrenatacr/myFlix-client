@@ -4,7 +4,10 @@ import { Button, Form, Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import './profile-view.scss'; // Import custom styles
 
-const ProfileView = ({ user, token, setUser }) => {
+const ProfileView = ({ token, setUser }) => {
+  // Get user from local storage
+  const user = JSON.parse(localStorage.getItem("user"));
+
   // State variables for user information and favorite movies
   const [username, setUsername] = useState(user.Username);
   const [password, setPassword] = useState("");
@@ -189,12 +192,6 @@ const ProfileView = ({ user, token, setUser }) => {
 
 // Define prop types for ProfileView component
 ProfileView.propTypes = {
-  user: PropTypes.shape({
-    Username: PropTypes.string.isRequired,
-    FavoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
-    Email: PropTypes.string.isRequired,
-    Birthday: PropTypes.string.isRequired,
-  }).isRequired,
   token: PropTypes.string.isRequired,
   setUser: PropTypes.func.isRequired,
 };
