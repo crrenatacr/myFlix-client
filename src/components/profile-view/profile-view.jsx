@@ -41,12 +41,12 @@ const ProfileView = ({ token, setUser }) => {
         setFavoriteMovies(userFavoriteMovies);
       })
       .catch((error) => console.error('Error fetching movies:', error));
-  }, [token, user.FavoriteMovies]);
+  }, []);
 
   // Handler for updating user profile information
   const handleUpdate = (e) => {
     e.preventDefault();
-    fetch(`https://movieverse-902fc605dee3.herokuapp.com/users/${user.Username}`, {
+    fetch(`https://movieverse-902fc605dee3.herokuapp.com/users/${user._id}`, {
       method: "PUT",
       headers: { 
         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ const ProfileView = ({ token, setUser }) => {
 
   // Handler for deregistering (deleting) user account
   const handleDeregister = () => {
-    fetch(`https://movieverse-902fc605dee3.herokuapp.com/users/${user.Username}`, {
+    fetch(`https://movieverse-902fc605dee3.herokuapp.com/users/${user._id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     })

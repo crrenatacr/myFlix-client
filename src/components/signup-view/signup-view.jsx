@@ -36,6 +36,7 @@ export const SignupView = ({ onLoggedIn }) => {
       .then((response) => response.json())
       .then((data) => {
         console.log('User registered:', data);
+        alert("User Registered Successfully!")
         onLoggedIn(data.token); // Trigger the login callback with the received token
       })
       .catch((error) => {

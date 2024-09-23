@@ -36,6 +36,7 @@ export const LoginView = ({ onLoggedIn }) => {
       }
     })
     .catch((error) => {
+      alert("Oops! Something went wrong.")
       console.error('Error logging in user:', error);
     });
   };
