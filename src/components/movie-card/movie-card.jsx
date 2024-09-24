@@ -15,7 +15,7 @@ export const MovieCard = ({ movie }) => {
     storedUser && storedUser.FavoriteMovies.includes(movie.id)
   );
 
-  // Function to toggle movie favorite status
+  // Function that toggles movie favorite status
   const toggleFavorite = () => {
     const userId = storedUser._id;
     const endpoint = favorited
